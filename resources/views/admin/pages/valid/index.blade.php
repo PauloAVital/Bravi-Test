@@ -19,17 +19,36 @@
                 @csrf
                 <div class="form-group mx-sm-10 mb-10">
                     <label for="Name" class="sr-only">bracket</label>
-                    <input type="text" name="name" class="form-control" placeholder="[{()}](){}">
-                    @if ($errors->has('name'))
-                    <span class="text-danger">{{ $errors->first('name') }}</span>
-                    @endif
-                    <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+                    <input type="text" name="bracket" id="bracket" class="form-control" placeholder="[{()}](){}">               
+                    <button type="submit" class="btn btn-primary mb-2" onclick="sendBracket()">Enviar</button>
                 </div>
-                
             </form>
         </div>
-        
     </div>    
 </div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#bracket").keyup(function() {
+            var valor = $("#bracket").val().replace(/[^({[})\]]+/g,'');
+            valor = valor.replace(/( )+/g, '');
+            $("#bracket").val(valor);
+        });
+        
+    });
+
+    function sendBracket(){
+        $.ajax({
+                type: 'GET',
+                url: "validRequest",
+                data: {bracket: $("#bracket").val()
+                },
+                success: function(data) {
+                    alert(data);
+                }
+            });
+    }
+</script>
 
 @endsection
