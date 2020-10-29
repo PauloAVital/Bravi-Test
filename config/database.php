@@ -46,7 +46,7 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL', ''),
-            'host' => '172.27.0.2',
+            'host' => '172.27.0.3',
             'port' => '3306',
             'database' => 'bravi',
             'username' => 'bravi_user',

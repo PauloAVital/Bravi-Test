@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
+use GuzzleHttp\Client;
+use App\Models\ControlePessoa;
 
 class UserTagsController extends Controller
-{
-    private $objuser;    
+{    
 
-    public function __construct()
-    {
-        $this->objuser = new User();        
+    public function __construct(ControlePessoa $pessoa)
+    {        
+        $this->pessoa = $pessoa;        
     }
 
     /**
@@ -21,19 +21,26 @@ class UserTagsController extends Controller
      */
     public function index()
     {        
-        $user = $this->objuser->all()->sortByDesc('id');                
+        // Não utilizado optei por outra solução direto em Jquery deixei apenas para verificação
+        $client = new Client();
+
+        $response = $client->request('GET', 'http://bravi-nginx/api/Pessoa/');
+        $statusCode = $response->getStatusCode();
+        $body = $response->getBody()->getContents();
+        $retLocal = json_decode($body, true);
+        //dd($retLocal);
+        $user = $retLocal;
         return view('admin.pages.users.index', compact('user'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function create()
-    {
-        $users = $this->objuser->all();
-        return view('admin.pages.users.create', compact('users'));
+    {       
+        return view('admin.pages.users.create');
+    }
+
+    public function createContato() {
+        $pessoas = ControlePessoa::all();
+        return view('admin.pages.contato.create', compact('pessoas'));
     }
 
 }

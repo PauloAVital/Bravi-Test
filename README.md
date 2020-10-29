@@ -46,3 +46,12 @@ Comando no terminal:
 ---
 
 8. Acesse o **_http://localhost:8000/_**
+
+---
+9. Crie seu usuario e realize o login
+![Título da imagem](login.png)
+
+---
+
+10. Na home verá os seguintes módulos:
+![Título da imagem](tela-principal.png)
