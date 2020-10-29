@@ -42,7 +42,7 @@ class ControllerPessoa extends Controller
     }
     
     public function update(Request $request, $id)
-    {
+    {        
         if (!$data = $this->pessoa->find($id)){
             return response()->json(['error'=> 'Nada Encontrado', 404]);
         } else {
@@ -73,6 +73,30 @@ class ControllerPessoa extends Controller
             return response()->json(['error'=> 'Nada Encontrado', 404]);
         } else {
             return response()->json($data);
+        }
+    }
+
+    public function pessoaUpdate($id){
+        if (!$data = $this->pessoa->find($id)){
+            return view('admin.pages.users.update', compact('data'));//, 
+        } else {
+            return view('admin.pages.users.update', compact('data'));
+        }
+        
+    }
+
+    public function updatePessoa(Request $request)
+    {                        
+        if (!$data = $this->pessoa->find($request->id)){
+            return response()->json(['error'=> 'Nada Encontrado', 404]);
+        } else {
+            $this->validate($request, $this->pessoa->rules());
+        
+            $dataForm =  $request->all();
+
+            $data->update($dataForm);
+            $user = response()->json($data);
+            return view('admin.pages.users.index', compact('user'));
         }
     }
 }

@@ -57,7 +57,7 @@ class ControllerContato extends Controller
     }
 
     public function destroy($id)
-    {
+    {        
         if (!$data = $this->contato->find($id)){
             return response()->json(['error'=> 'Nada Encontrado', 404]);
         } else {
@@ -73,6 +73,38 @@ class ControllerContato extends Controller
             return response()->json(['error'=> 'Nada Encontrado', 404]);
         } else {
             return response()->json($data);
+        }
+    }
+
+    public function ContatoPessoa($id)
+    {
+        if (!$data = $this->contato::where('id_pessoa', $id)->get(['id','id_pessoa','email','telefone','watssap'])) {
+            return response()->json(['error'=> 'Nada Encontrado', 404]);
+        } else {
+            return response()->json($data);
+        }
+    }
+
+    public function ContatoUpdate($id){
+        if (!$data = $this->contato->find($id)){
+            return view('admin.pages.contato.update', compact('data'));//, 
+        } else {
+            return view('admin.pages.contato.update', compact('data'));
+        }
+    }
+
+    public function updateContato(Request $request)
+    {                        
+        if (!$data = $this->contato->find($request->id)){
+            return response()->json(['error'=> 'Nada Encontrado', 404]);
+        } else {
+            $this->validate($request, $this->contato->rules());
+        
+            $dataForm =  $request->all();
+
+            $data->update($dataForm);
+            $contato = response()->json($data);
+            return view('admin.pages.users.index', compact('contato'));
         }
     }
 }

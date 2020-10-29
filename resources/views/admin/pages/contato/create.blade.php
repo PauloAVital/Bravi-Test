@@ -4,7 +4,7 @@
 
 @section('content')
 <h1 class="text-center">
-    Inserir Pessoa
+    Inserir Contato
 </h1>
 <hr>
 <div class="col-8 m-auto">
@@ -15,19 +15,29 @@
     </div>
    
         <form name="formCad" id="formCad" method="" action="">   
-        
+        <select class="form-control mt-3 mb-4" name="id_pessoa" id="id_pessoa">            
+            @foreach($pessoas as $pessoa)
+                <option value="{{$pessoa->id}}">{{$pessoa->nome}}</option>
+            @endforeach
+        </select>
         <input class="form-control mt-3 mb-4" 
                type="text" 
-               name="nome" 
-               id="nome" 
+               name="email" 
+               id="email" 
                value="" 
-               placeholder="Nome">
+               placeholder="E-mail">
         <input class="form-control mt-3 mb-4" 
                type="text" 
-               name="endereco" 
-               id="endereco" 
+               name="telefone" 
+               id="telefone" 
                value="" 
-               placeholder="Endereço">
+               placeholder="Telefone">
+        <input class="form-control mt-3 mb-4" 
+               type="text" 
+               name="watssap" 
+               id="watssap" 
+               value="" 
+               placeholder="Watssap">
         
         <input class="btn btn-primary mt-3 mb-4" 
                type="submit"
@@ -38,16 +48,20 @@
 
 <script>
     function EnviarPessoa(){        
-        let nome = $("#nome").val();
-        let endereco = $("#endereco").val();
+        let id_pessoa = $("#id_pessoa").val();
+        let email = $("#email").val();
+        let telefone = $("#telefone").val();
+        let watssap = $("#watssap").val();
         let _token   = $('meta[name="csrf-token"]').attr('content');
         $.ajax({
-            url: "{{ url('api/Pessoa') }}",
+            url: "{{ url('api/Contato') }}",
             type: "POST",
             data: {
-                    nome: nome,
-                    endereco: endereco,                    
-                    _token: _token
+                id_pessoa: id_pessoa,
+                email: email,
+                telefone: telefone,
+                watssap: watssap,                    
+                _token: _token
             },
             dataType: "json",
             success:function(resp){                

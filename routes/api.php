@@ -21,6 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('Contato/{id}/Pessoa', 'Api\ControllerContato@pessoa');
 Route::get('Pessoa/{id}/Contato', 'Api\ControllerPessoa@contato');
 
+Route::get('ContatoPessoa/{id}', 'Api\ControllerContato@ContatoPessoa');
+
 Route::apiResource('Pessoa', 'Api\ControllerPessoa');
 Route::apiResource('Contato', 'Api\ControllerContato');
 
