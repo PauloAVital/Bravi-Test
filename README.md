@@ -10,6 +10,7 @@
 ## Instalar as dependências do composer
 4. **docker-compose exec app composer install**
 4.0. ![Título da imagem](bravi-erro-composer.png) 
+4.1. **docker-compose exec app php artisan migrate:refresh**
 
 ## Caso gere um erro
 4.1. **docker-compose exec app composer update**
